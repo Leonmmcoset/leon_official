@@ -15,6 +15,27 @@ import { styled } from "@mui/material/styles";
 import ListSubheader from "@mui/material/ListSubheader";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 
+function colorLog(message: string, color: 'reset' | 'red' | 'green' | 'yellow' | 'blue') {
+    const colors = {
+        reset: '\x1b[0m',
+        red: '\x1b[31m',
+        green: '\x1b[32m',
+        yellow: '\x1b[33m',
+        blue: '\x1b[34m'
+    };
+    console.log(`${colors[color]}%s${colors.reset}`, message);
+}
+
+colorLog(`
+ _____                      ______ __                 __ 
+|     |_.-----.-----.-----.|      |  |.-----.--.--.--|  |
+|       |  -__|  _  |     ||   ---|  ||  _  |  |  |  _  |
+|_______|_____|_____|__|__||______|__||_____|_____|_____|
+                                                         
+`, 'blue')
+colorLog('恭喜你发现了菜单！', 'red')
+colorLog('LeonCloud是Leon突发奇想搞出来的 (=^ _ ^=)', 'green')
+
 // 自定义内容标题样式
 const StyledListHeader = styled(ListSubheader)({
   backgroundImage: "var(--Paper-overlay)",
