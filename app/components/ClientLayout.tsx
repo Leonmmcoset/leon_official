@@ -121,7 +121,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
             </Box>
 
             {/* 右侧区域留空，让左侧内容靠左 */}
-            <Box sx={{ flexGrow: 1 }} />
+            {/* <Box sx={{ flexGrow: 1 }} /> */}
 
             <Menu
               id="menu-appbar"
@@ -157,6 +157,22 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                 LeonBasic
               </MenuItem>
             </Menu>
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+            <Typography
+              variant="body1"
+              component="span"
+              sx={{ mr: 2, cursor: 'pointer' }}
+              onClick={() => (window.location.href = "/support")}
+            >
+              技术支持
+            </Typography>
+            <Button
+              id="menu-appbar"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleMenu}
+              color="inherit"
+            ></Button></Box><Box sx={{ flexGrow: 1 }} />
           </Toolbar>
         </AppBar>
       </Box>
