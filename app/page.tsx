@@ -40,7 +40,19 @@ export default function Home() {
       description: "个人项目展示平台",
       image: "/projects/leonpan/logo.png",
       href: "/project/leonpan"
-    }
+    },
+    {
+      name: "LeonBasic",
+      description: "基于Rust的简单易学的编程语言",
+      image: "/nologo.png",
+      href: "/project/leonbasic"
+    },
+    {
+      name: "LeonApp",
+      description: "基于PHP的轻量级应用程序",
+      image: "/projects/leonapp/logo.jpeg",
+      href: "/project/leonapp"
+    },
   ];
 
   // 扩展服务类别数据
@@ -366,39 +378,6 @@ export default function Home() {
         </Container>
       </Box>
 
-      {/* 页脚区域 */}
-      <Box sx={{ bgcolor: 'primary.dark', color: 'white', py: 8, px: 2 }}>
-        <Container maxWidth="lg">
-          <Box sx={{ 
-            display: 'flex', 
-            flexDirection: isMobile ? 'column' : 'row',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            mb: 6
-          }}>
-            <Typography variant="h5" gutterBottom fontWeight="bold">
-              LeonCloud
-            </Typography>
-            <Typography variant="body1" sx={{ opacity: 0.8 }}>
-              LeonMMcoset的所有产品的运营商
-            </Typography>
-          </Box>
-          
-          <Box sx={{ 
-            height: 1, 
-            bgcolor: 'white', 
-            opacity: 0.1, 
-            mb: 6 
-          }}></Box>
-          
-          <Typography variant="body2" align="center" paragraph>
-            © {new Date().getFullYear()} LeonCloud. 保留所有权利。
-          </Typography>
-          <Typography variant="caption" align="center" color="rgba(255,255,255,0.7)">
-            我们的宗旨是给用户提供简单、安全、高效、全方面的服务
-          </Typography>
-        </Container>
-      </Box>
     </Box>
   );
 }

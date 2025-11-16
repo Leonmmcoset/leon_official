@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import Container from "@mui/material/Container";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { styled } from "@mui/material/styles";
@@ -122,6 +123,11 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
               >
                 LeonPan
               </MenuItem>
+              <MenuItem
+                onClick={() => (window.location.href = "/project/leonapp")}
+              >
+                LeonAPP
+              </MenuItem>
               {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
               <StyledListHeader>其它</StyledListHeader>
               <MenuItem
@@ -134,6 +140,40 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
         </AppBar>
       </Box>
       {children}
+      
+      {/* 页脚区域 */}
+      <Box sx={{ bgcolor: 'primary.dark', color: 'white', py: 8, px: 2 }}>
+        <Container maxWidth="lg">
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', md: 'row' },
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            mb: 6
+          }}>
+            <Typography variant="h5" gutterBottom fontWeight="bold">
+              LeonCloud
+            </Typography>
+            <Typography variant="body1" sx={{ opacity: 0.8 }}>
+              LeonMMcoset的所有产品的运营商
+            </Typography>
+          </Box>
+          
+          <Box sx={{ 
+            height: 1, 
+            bgcolor: 'white', 
+            opacity: 0.1, 
+            mb: 6 
+          }}></Box>
+          
+          <Typography variant="body2" align="center" paragraph>
+            © {new Date().getFullYear()} LeonCloud. 保留所有权利。
+          </Typography>
+          <Typography variant="caption" align="center" color="rgba(255,255,255,0.7)">
+            我们的宗旨是给用户提供简单、安全、高效、全方面的服务
+          </Typography>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 };

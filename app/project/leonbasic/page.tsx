@@ -42,29 +42,9 @@ export default function LeonBasic() {
 
   // 示例代码
   const exampleCode = `// LeonBasic示例代码
-print("Hello, World!")
-
-// 变量声明
-name = "LeonBasic"
-version = 1.0
-
-// 条件语句
-if version > 0.5:
-    print(f"当前版本: {version}")
-else:
-    print("需要更新版本")
-
-// 循环语句
-for i in range(1, 5):
-    print(f"计数: {i}")
-
-// 函数定义
-def greet(name):
-    return f"你好, {name}!"
-
-// 函数调用
-message = greet("开发者")
-print(message)`;
+require("basic");
+var(input) = basic.input(string:"");
+basic.print(string:"请输入一个数字:" + var(input));`;
 
   return (
     <Container maxWidth="lg" sx={{ py: { xs: 4, md: 8 } }}>
@@ -157,7 +137,7 @@ print(message)`;
       </Box>
 
       {/* 语法示例 */}
-      {/* <Box sx={{ mb: { xs: 8, md: 12 } }}>
+      <Box sx={{ mb: { xs: 8, md: 12 } }}>
         <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 4, fontWeight: 600 }}>
           语法示例
         </Typography>
@@ -188,7 +168,7 @@ print(message)`;
             {exampleCode}
           </Box>
         </Card>
-      </Box> */}
+      </Box>
 
       {/* 资源链接 */}
       <Box sx={{ mb: 6 }}>
@@ -253,7 +233,7 @@ print(message)`;
                 <Button 
                   variant="outlined" 
                   fullWidth
-                  href="https://lb.jjmm.ink/docs"
+                  href="https://github.com/Leonmmcoset/LeonLang/tree/master/test"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -268,7 +248,7 @@ print(message)`;
       {/* 页脚 */}
       <Box sx={{ textAlign: 'center', mt: 12, pt: 4, borderTop: '1px solid rgba(0,0,0,0.1)' }}>
         <Typography variant="body2" color="text.secondary">
-          © {new Date().getFullYear()} LeonBasic Programming Language
+          © {new Date().getFullYear()} LeonMMcoset
         </Typography>
       </Box>
     </Container>
