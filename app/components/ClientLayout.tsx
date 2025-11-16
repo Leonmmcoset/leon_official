@@ -123,6 +123,12 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                 LeonPan
               </MenuItem>
               {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
+              <StyledListHeader>其它</StyledListHeader>
+              <MenuItem
+                onClick={() => (window.location.href = "/project/leonbasic")}
+              >
+                LeonBasic
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
