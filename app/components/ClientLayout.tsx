@@ -14,6 +14,13 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { styled } from "@mui/material/styles";
 import ListSubheader from "@mui/material/ListSubheader";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Drawer from "@mui/material/Drawer";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Divider from "@mui/material/Divider";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 function colorLog(message: string, color: 'reset' | 'red' | 'green' | 'yellow' | 'blue') {
     const colors = {
@@ -56,6 +63,24 @@ interface ClientLayoutProps {
 const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   // 将hooks移到组件内部
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  // 监听窗口大小变化，判断是否为移动设备
+  React.useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768); // 768px为移动端断点
+    };
+    
+    // 初始化时判断
+    handleResize();
+    
+    // 添加事件监听器
+    window.addEventListener('resize', handleResize);
+    
+    // 清理函数
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -64,6 +89,112 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  // 定义顶栏导航项的类型
+  interface NavItem {
+    id: string;
+    label: string;
+    href: string;
+    type: 'link' | 'menu';
+    children?: NavItem[];
+  }
+
+  // 定义导航项目菜单的类型
+  interface ProjectItem {
+    id: string;
+    label: string;
+    href: string;
+    category: string;
+  }
+
+  // 动态定义顶部导航链接
+  const navItems: NavItem[] = [
+    {
+      id: 'home',
+      label: 'LeonCloud',
+      href: '/',
+      type: 'link'
+    },
+    {
+      id: 'project',
+      label: '项目',
+      href: '',
+      type: 'menu'
+    },
+    {
+      id: 'support',
+      label: '技术支持',
+      href: '/support',
+      type: 'link'
+    },
+    {
+      id: 'joinus',
+      label: '加入我们',
+      href: '/joinus',
+      type: 'link'
+    }
+  ];
+
+  // 动态定义项目列表
+  const projectItems: ProjectItem[] = [
+    {
+      id: 'leonpan',
+      label: 'LeonPan',
+      href: '/project/leonpan',
+      category: 'Web'
+    },
+    {
+      id: 'leonapp',
+      label: 'LeonAPP',
+      href: '/project/leonapp',
+      category: 'Web'
+    },
+    {
+      id: 'leonbasic',
+      label: 'LeonBasic',
+      href: '/project/leonbasic',
+      category: '其它'
+    }
+  ];
+
+  // 按分类组织项目
+  const projectsByCategory = projectItems.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item);
+    return acc;
+  }, {} as Record<string, ProjectItem[]>);
+
+  // 侧边栏开关控制
+  const toggleDrawer = (open: boolean) => () => {
+    setMobileDrawerOpen(open);
+  };
+
+  // 侧边栏项目点击处理
+  const handleDrawerItemClick = (href: string) => {
+    window.location.href = href;
+    setMobileDrawerOpen(false);
+  };
+
+  // 分类展开状态管理 - 现在在projectsByCategory定义之后初始化
+  const [expandedCategories, setExpandedCategories] = React.useState<Record<string, boolean>>({
+    // 直接初始化所有已知分类为展开状态
+    'Web': true,
+    '其它': true
+  });
+  
+  // 项目部分的展开状态管理
+  const [projectsExpanded, setProjectsExpanded] = React.useState(false);
+
+  // 切换分类展开/收缩状态
+  const toggleCategory = (category: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [category]: !prev[category]
+    }));
+  };
+
   interface Props {
     /**
      * Injected by the documentation to work in an iframe.
@@ -97,85 +228,246 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="static">
           <Toolbar>
-            {/* 左侧区域：Logo和项目按钮 */}
-            <Box sx={{ display: "flex", alignItems: "center" }}>
+            {/* 响应式顶栏 - 移动端显示汉堡菜单，桌面端显示完整导航 */}
+            <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
+              {/* 移动端：汉堡菜单按钮 */}
+              {isMobile && (
+                <IconButton
+                  color="inherit"
+                  aria-label="打开菜单"
+                  edge="start"
+                  onClick={toggleDrawer(true)}
+                  sx={{ mr: 2 }}
+                >
+                  <Box sx={{ 
+                    display: 'flex', 
+                    flexDirection: 'column', 
+                    justifyContent: 'space-between', 
+                    width: 24, 
+                    height: 18 
+                  }}>
+                    <Box sx={{ height: 2, bgcolor: 'white', width: '100%' }} />
+                    <Box sx={{ height: 2, bgcolor: 'white', width: '100%' }} />
+                    <Box sx={{ height: 2, bgcolor: 'white', width: '100%' }} />
+                  </Box>
+                </IconButton>
+              )}
+
+              {/* 首页链接（在所有设备上都显示） */}
               <Typography
-                variant="h6"
+                variant={isMobile ? "h6" : "h6"}
                 component="div"
-                sx={{ mr: 2, cursor: 'pointer' }}
-                onClick={() => (window.location.href = "/")}
+                sx={{ 
+                  cursor: 'pointer',
+                  '&:hover': {
+                    opacity: 0.8
+                  }
+                }}
+                onClick={() => (window.location.href = '/')}
               >
                 LeonCloud
               </Typography>
-              <Button
-                id="menu-appbar"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Typography variant="body1" component="span">
-                  项目
-                </Typography>
-              </Button>
+
+              {/* 桌面端：完整导航链接 */}
+              {!isMobile && (
+                <Box sx={{ display: "flex", alignItems: "center", ml: 2 }}>
+                  {navItems.filter(item => item.id !== 'home').map((item) => {
+                    if (item.type === 'link') {
+                      return (
+                        <Typography
+                          key={item.id}
+                          variant="body1"
+                          component="div"
+                          sx={{ 
+                            mr: 2, 
+                            cursor: 'pointer',
+                            '&:hover': {
+                              opacity: 0.8
+                            }
+                          }}
+                          onClick={() => (window.location.href = item.href)}
+                        >
+                          {item.label}
+                        </Typography>
+                      );
+                    } else if (item.type === 'menu') {
+                      return (
+                        <Button
+                          key={item.id}
+                          id="menu-appbar"
+                          aria-controls="menu-appbar"
+                          aria-haspopup="true"
+                          onClick={handleMenu}
+                          color="inherit"
+                        >
+                          <Typography variant="body1" component="span">
+                            {item.label}
+                          </Typography>
+                        </Button>
+                      );
+                    }
+                    return null;
+                  })}
+                </Box>
+              )}
             </Box>
 
-            {/* 右侧区域留空，让左侧内容靠左 */}
-            {/* <Box sx={{ flexGrow: 1 }} /> */}
-
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorEl}
-              // anchorOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'left',
-              // }}
-              keepMounted
-              // transformOrigin={{
-              //   vertical: 'top',
-              //   horizontal: 'left',
-              // }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}
-            >
-              <StyledListHeader>Web</StyledListHeader>
-              <MenuItem
-                onClick={() => (window.location.href = "/project/leonpan")}
+            {/* 桌面端：项目下拉菜单 */}
+            {!isMobile && (
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
               >
-                LeonPan
-              </MenuItem>
-              <MenuItem
-                onClick={() => (window.location.href = "/project/leonapp")}
-              >
-                LeonAPP
-              </MenuItem>
-              {/* <MenuItem onClick={handleClose}>My account</MenuItem> */}
-              <StyledListHeader>其它</StyledListHeader>
-              <MenuItem
-                onClick={() => (window.location.href = "/project/leonbasic")}
-              >
-                LeonBasic
-              </MenuItem>
-            </Menu>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Typography
-              variant="body1"
-              component="span"
-              sx={{ mr: 2, cursor: 'pointer' }}
-              onClick={() => (window.location.href = "/support")}
-            >
-              技术支持
-            </Typography>
-            <Button
-              id="menu-appbar"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleMenu}
-              color="inherit"
-            ></Button></Box><Box sx={{ flexGrow: 1 }} />
-          </Toolbar>
-        </AppBar>
+                {Object.entries(projectsByCategory).map(([category, items]) => (
+                  <React.Fragment key={category}>
+                    <StyledListHeader>{category}</StyledListHeader>
+                    {items.map((project) => (
+                      <MenuItem
+                        key={project.id}
+                        onClick={() => {
+                          window.location.href = project.href;
+                          handleClose();
+                        }}
+                      >
+                        {project.label}
+                      </MenuItem>
+                    ))}
+                  </React.Fragment>
+                ))}
+              </Menu>
+            )}
+           </Toolbar>
+          </AppBar>
       </Box>
+
+      {/* 移动端侧边栏 */}
+      <Drawer
+        anchor="left"
+        open={mobileDrawerOpen}
+        onClose={toggleDrawer(false)}
+      >
+        <Box sx={{ width: 250 }} role="presentation">
+          {/* 侧边栏头部 */}
+          <Box sx={{ 
+            bgcolor: 'primary.main', 
+            color: 'white', 
+            p: 2, 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center'
+          }}>
+            <Typography variant="h6">导航菜单</Typography>
+            <IconButton
+              edge="end"
+              color="inherit"
+              onClick={toggleDrawer(false)}
+              aria-label="关闭菜单"
+            >
+              <ChevronRightIcon />
+            </IconButton>
+          </Box>
+          
+          <Divider />
+          
+          {/* 侧边栏导航链接 */}
+          <List>
+            {navItems.filter(item => item.id !== 'home').map((item) => {
+              if (item.type === 'link') {
+                return (
+                  <ListItem 
+                    component="a"
+                    href={item.href}
+                    key={item.id}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleDrawerItemClick(item.href);
+                    }}
+                  >
+                    <ListItemText primary={item.label} />
+                  </ListItem>
+                );
+              } else if (item.type === 'menu') {
+                return (
+                  <React.Fragment key={item.id}>
+                    <ListItem 
+                      component="div"
+                      onClick={() => setProjectsExpanded(prev => !prev)}
+                      sx={{ 
+                        pl: 1, 
+                        cursor: 'pointer',
+                        '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' },
+                        display: 'flex',
+                        alignItems: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.02)',
+                        fontWeight: 'bold'
+                      }}
+                    >
+                      <ChevronRightIcon 
+                        fontSize="small" 
+                        sx={{ 
+                          mr: 1,
+                          transform: projectsExpanded ? 'rotate(90deg)' : 'none',
+                          transition: 'transform 0.2s ease-in-out'
+                        }} 
+                      />
+                      <ListItemText 
+                        primary={item.label} 
+                      />
+                    </ListItem>
+                    {projectsExpanded && Object.entries(projectsByCategory).map(([category, projects]) => (
+                      <React.Fragment key={category}>
+                        <ListItem 
+                          component="div"
+                          onClick={() => toggleCategory(category)}
+                          sx={{ 
+                            pl: 2, 
+                            cursor: 'pointer',
+                            '&:hover': { backgroundColor: 'rgba(0,0,0,0.04)' },
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <ChevronRightIcon 
+                            fontSize="small" 
+                            sx={{ 
+                              mr: 1,
+                              transform: expandedCategories[category] ? 'rotate(90deg)' : 'none',
+                              transition: 'transform 0.2s ease-in-out'
+                            }} 
+                          />
+                          <ListItemText 
+                            primary={category} 
+                            primaryTypographyProps={{ fontSize: '0.7rem' }}
+                          />
+                        </ListItem>
+                        {expandedCategories[category] && projects.map((project) => (
+                          <ListItem 
+                            component="a"
+                            href={project.href}
+                            key={project.id}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDrawerItemClick(project.href);
+                            }}
+                            sx={{ pl: 6 }}
+                          >
+                            <ListItemText primary={project.label} />
+                          </ListItem>
+                        ))}
+                      </React.Fragment>
+                    ))}
+                  </React.Fragment>
+                );
+              }
+              return null;
+            })}
+          </List>
+        </Box>
+      </Drawer>
+
       {children}
       
       {/* 页脚区域 */}
