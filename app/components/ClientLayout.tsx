@@ -226,7 +226,11 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
+        <AppBar position="fixed" sx={{ 
+          zIndex: 1100, 
+          backdropFilter: 'blur(12px)',
+          // backgroundColor: 'rgba(30, 30, 30, 0.8)', // 添加半透明背景色以显示模糊效果
+        }}>
           <Toolbar>
             {/* 响应式顶栏 - 移动端显示汉堡菜单，桌面端显示完整导航 */}
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
@@ -468,7 +472,10 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
         </Box>
       </Drawer>
 
-      {children}
+      {/* 为固定顶栏添加足够的顶部空间 */}
+      <Box sx={{ pt: { xs: 8, sm: 6 } }}>
+        {children}
+      </Box>
       
       {/* 页脚区域 */}
       <Box sx={{ bgcolor: 'primary.dark', color: 'white', py: 8, px: 2 }}>
