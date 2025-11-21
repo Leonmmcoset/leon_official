@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -24,6 +24,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useLanguage } from "./language/LanguageContext";
+import LoadingOverlay from "./LoadingOverlay";
 
 function colorLog(message: string, color: 'reset' | 'red' | 'green' | 'yellow' | 'blue') {
     const colors = {
@@ -64,6 +65,10 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
+  
+  // 加载状态管理
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [loadingProgress, setLoadingProgress] = React.useState(0);
 
   // 监听窗口大小变化，判断是否为移动设备
   React.useEffect(() => {
@@ -79,6 +84,74 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     
     // 清理函数
     return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  // 模拟页面加载进度
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+    
+    // 设置进度条动画
+    interval = setInterval(() => {
+      setLoadingProgress((prevProgress) => {
+        const newProgress = prevProgress + Math.random() * 20;
+        
+        // 当进度达到90%时，保持一段时间再完成
+        if (newProgress >= 90) {
+          if (interval) {
+            clearInterval(interval);
+            
+            // 延迟后完成加载
+            setTimeout(() => {
+              setLoadingProgress(100);
+              setTimeout(() => {
+                setIsLoading(false);
+              }, 300);
+            }, 500);
+          }
+          return 90;
+        }
+        
+        return newProgress;
+      });
+    }, 200);
+    
+    // 监听页面加载完成事件
+    const handleLoad = () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+      
+      // 确保进度条完成
+      setLoadingProgress(100);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
+    };
+    
+    // 如果页面已经加载完成
+    if (document.readyState === 'complete') {
+      handleLoad();
+    } else {
+      window.addEventListener('load', handleLoad);
+    }
+    
+    // 监听路由变化（Next.js客户端导航）
+    const handleRouteChange = () => {
+      setIsLoading(true);
+      setLoadingProgress(0);
+    };
+    
+    // 监听popstate事件（浏览器前进/后退）
+    window.addEventListener('popstate', handleRouteChange);
+    
+    // 清理函数
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+      window.removeEventListener('load', handleLoad);
+      window.removeEventListener('popstate', handleRouteChange);
+    };
   }, []);
 
   const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -186,6 +259,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   // 侧边栏项目点击处理
   const handleDrawerItemClick = (href: string) => {
+    // 导航时触发加载状态
+    setIsLoading(true);
+    setLoadingProgress(0);
     window.location.href = href;
     setMobileDrawerOpen(false);
   };
@@ -237,6 +313,13 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   return (
     <ThemeProvider>
+      {/* 全局加载弹窗 */}
+      <LoadingOverlay 
+        open={isLoading}
+        progress={loadingProgress}
+        message="正在加载..."
+      />
+      
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{ 
           zIndex: 1100, 
@@ -279,7 +362,12 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                     opacity: 0.8
                   }
                 }}
-                onClick={() => (window.location.href = '/')}
+                onClick={() => {
+                  // 导航时触发加载状态
+                  setIsLoading(true);
+                  setLoadingProgress(0);
+                  window.location.href = '/';
+                }}
               >
                 LeonCloud
               </Typography>
@@ -301,7 +389,12 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                               opacity: 0.8
                             }
                           }}
-                          onClick={() => (window.location.href = item.href)}
+                          onClick={() => {
+                            // 导航时触发加载状态
+                            setIsLoading(true);
+                            setLoadingProgress(0);
+                            window.location.href = item.href;
+                          }}
                         >
                           {item.label}
                         </Typography>
@@ -347,6 +440,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                     <MenuItem
                       key={project.id}
                       onClick={() => {
+                        // 导航时触发加载状态
+                        setIsLoading(true);
+                        setLoadingProgress(0);
                         window.location.href = project.href;
                         handleClose();
                       }}
