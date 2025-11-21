@@ -22,11 +22,13 @@ import TimelineDot from "@mui/lab/TimelineDot";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import ClientLayout from "../components/ClientLayout";
+import { useLanguage } from '../components/language/LanguageContext';
 
 const Joinus: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useLanguage();
 
   const handleEmailClick = () => {
     window.location.href = 'mailto:leonmmcoset@outlook.com';
@@ -34,32 +36,32 @@ const Joinus: React.FC = () => {
 
   // 要求列表数据
   const requirements = [
-    { text: "能会至少一种编程语言的开发人员", icon: <CodeIcon /> },
-    { text: "有良好的沟通能力和团队合作精神", icon: <MessageIcon /> },
-    { text: "无违法前科", icon: <CheckCircleIcon /> },
-    { text: "拥有微信或QQ账号", icon: <GroupIcon /> }
+    { text: t('joinus.requirements.developer'), icon: <CodeIcon /> },
+    { text: t('joinus.requirements.communication'), icon: <MessageIcon /> },
+    { text: t('joinus.requirements.cleanRecord'), icon: <CheckCircleIcon /> },
+    { text: t('joinus.requirements.socialAccount'), icon: <GroupIcon /> }
   ];
 
   // 加入步骤数据
   const steps = [
     { 
-      title: "发送申请", 
-      description: "通过我们的邮箱发送你的申请意愿",
+      title: t('joinus.steps.step1.title'), 
+      description: t('joinus.steps.step1.description'),
       icon: <MailIcon />
     },
     { 
-      title: "等待回复", 
-      description: "我们会在三天内回复你的申请",
+      title: t('joinus.steps.step2.title'), 
+      description: t('joinus.steps.step2.description'),
       icon: <MessageIcon />
     },
     { 
-      title: "加入群聊", 
-      description: "获得微信/QQ内部群聊的邀请",
+      title: t('joinus.steps.step3.title'), 
+      description: t('joinus.steps.step3.description'),
       icon: <GroupIcon />
     },
     { 
-      title: "讨论技术", 
-      description: "在群聊中讨论你的技术方向和项目",
+      title: t('joinus.steps.step4.title'), 
+      description: t('joinus.steps.step4.description'),
       icon: <CodeIcon />
     }
   ];
@@ -96,7 +98,7 @@ const Joinus: React.FC = () => {
           fontWeight="bold"
           sx={{ color: 'primary.main' }}
         >
-          加入我们
+          {t('joinus.pageTitle')}
         </Typography>
         <Typography 
           variant="body1" 
@@ -107,8 +109,7 @@ const Joinus: React.FC = () => {
             lineHeight: 1.6
           }}
         >
-          我们是一个致力于推动技术创新的团队，致力于为客户提供高质量的服务。
-          加入我们，让我们的技术更上一层楼！
+          {t('joinus.pageDescription')}
         </Typography>
       </Box>
 
@@ -139,7 +140,7 @@ const Joinus: React.FC = () => {
             }
           }}
         >
-          我们需要
+          {t('joinus.requirements.title')}
         </Typography>
         
         <Box 
@@ -219,7 +220,7 @@ const Joinus: React.FC = () => {
               borderRadius: 2
             }}
           >
-            你只要满足以上条件，就可以加入我们的团队！
+            {t('joinus.requirements.criteria')}
           </Typography>
         </Box>
       </Box>
@@ -251,7 +252,7 @@ const Joinus: React.FC = () => {
             }
           }}
         >
-          加入我们的步骤
+          {t('joinus.steps.title')}
         </Typography>
         
         <Box sx={{ px: { xs: 1, md: 4 } }}>
@@ -296,7 +297,7 @@ const Joinus: React.FC = () => {
                         gutterBottom 
                         fontWeight="bold"
                       >
-                        步骤 {index + 1}：{step.title}
+                        {t('joinus.steps.stepTitlePrefix')} {index + 1}: {step.title}
                       </Typography>
                       <Typography 
                         variant="body1" 
@@ -315,7 +316,7 @@ const Joinus: React.FC = () => {
                           startIcon={<MailIcon />}
                           onClick={handleEmailClick}
                         >
-                          立即发送申请
+                          {t('joinus.steps.applyNow')}
                         </Button>
                       )}
                     </CardContent>
@@ -358,7 +359,7 @@ const Joinus: React.FC = () => {
             fontWeight="bold"
             sx={{ color: 'white' }}
           >
-            准备好加入我们了吗？
+            {t('joinus.cta.title')}
           </Typography>
           <Typography 
             variant="body1" 
@@ -370,7 +371,7 @@ const Joinus: React.FC = () => {
               color: 'white'
             }}
           >
-            不要犹豫，立即发送邮件申请加入我们的团队！
+            {t('joinus.cta.description')}
           </Typography>
           <Button 
             variant="contained" 
@@ -387,7 +388,7 @@ const Joinus: React.FC = () => {
             startIcon={<MailIcon />}
             onClick={handleEmailClick}
           >
-            立即联系
+            {t('joinus.cta.button')}
           </Button>
         </Box>
       </Box>

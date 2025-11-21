@@ -9,8 +9,10 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Container from "@mui/material/Container";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { ThemeProvider } from "./theme/ThemeContext";
+import ThemeToggle from "./theme/ThemeToggle";
+import LanguageToggle from "./language/LanguageToggle";
 import { styled } from "@mui/material/styles";
 import ListSubheader from "@mui/material/ListSubheader";
 import useScrollTrigger from "@mui/material/useScrollTrigger";
@@ -21,6 +23,7 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import { useLanguage } from "./language/LanguageContext";
 
 function colorLog(message: string, color: 'reset' | 'red' | 'green' | 'yellow' | 'blue') {
     const colors = {
@@ -49,11 +52,7 @@ const StyledListHeader = styled(ListSubheader)({
 });
 
 // 创建MUI主题
-const theme = createTheme({
-  typography: {
-    fontFamily: "inherit",
-  },
-});
+// Theme is now managed by our custom ThemeProvider
 
 interface ClientLayoutProps {
   children: React.ReactNode;
@@ -94,6 +93,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   interface NavItem {
     id: string;
     label: string;
+    labelKey?: string;
     href: string;
     type: 'link' | 'menu';
     children?: NavItem[];
@@ -107,6 +107,9 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     category: string;
   }
 
+  // 获取语言上下文
+  const { t } = useLanguage();
+
   // 动态定义顶部导航链接
   const navItems: NavItem[] = [
     {
@@ -117,19 +120,29 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     },
     {
       id: 'project',
-      label: '项目',
+      labelKey: 'navigation.projects',
+      label: t('navigation.projects'),
       href: '',
       type: 'menu'
     },
     {
+      id: 'news',
+      labelKey: 'navigation.news',
+      label: t('navigation.news'),
+      href: '/news',
+      type: 'link'
+    },
+    {
       id: 'support',
-      label: '技术支持',
+      labelKey: 'navigation.support',
+      label: t('navigation.support'),
       href: '/support',
       type: 'link'
     },
     {
       id: 'joinus',
-      label: '加入我们',
+      labelKey: 'navigation.joinUs',
+      label: t('navigation.joinUs'),
       href: '/joinus',
       type: 'link'
     }
@@ -139,19 +152,19 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   const projectItems: ProjectItem[] = [
     {
       id: 'leonpan',
-      label: 'LeonPan',
+      label: t('projects.leonpan.name'),
       href: '/project/leonpan',
       category: 'Web'
     },
     {
       id: 'leonapp',
-      label: 'LeonAPP',
+      label: t('projects.leonapp.name'),
       href: '/project/leonapp',
       category: 'Web'
     },
     {
       id: 'leonbasic',
-      label: 'LeonBasic',
+      label: t('projects.leonbasic.name'),
       href: '/project/leonbasic',
       category: '其它'
     }
@@ -223,8 +236,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
   // }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <ThemeProvider>
       <Box sx={{ flexGrow: 1 }}>
         <AppBar position="fixed" sx={{ 
           zIndex: 1100, 
@@ -303,6 +315,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                           aria-haspopup="true"
                           onClick={handleMenu}
                           color="inherit"
+                          sx={{ textTransform: 'none' }}
                         >
                           <Typography variant="body1" component="span">
                             {item.label}
@@ -318,30 +331,32 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
             {/* 桌面端：项目下拉菜单 */}
             {!isMobile && (
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                {Object.entries(projectsByCategory).map(([category, items]) => (
-                  <React.Fragment key={category}>
-                    <StyledListHeader>{category}</StyledListHeader>
-                    {items.map((project) => (
-                      <MenuItem
-                        key={project.id}
-                        onClick={() => {
-                          window.location.href = project.href;
-                          handleClose();
-                        }}
-                      >
-                        {project.label}
-                      </MenuItem>
-                    ))}
-                  </React.Fragment>
-                ))}
+              <>
+                <LanguageToggle />
+                <ThemeToggle />
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                {Object.entries(projectsByCategory).flatMap(([category, items]) => [
+                  <StyledListHeader key={`header-${category}`}>{category}</StyledListHeader>,
+                  ...items.map((project) => (
+                    <MenuItem
+                      key={project.id}
+                      onClick={() => {
+                        window.location.href = project.href;
+                        handleClose();
+                      }}
+                    >
+                      {project.label}
+                    </MenuItem>
+                  ))
+                ])}
               </Menu>
+              </>
             )}
            </Toolbar>
           </AppBar>
@@ -363,7 +378,13 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
             justifyContent: 'space-between', 
             alignItems: 'center'
           }}>
-            <Typography variant="h6">导航菜单</Typography>
+            <Typography variant="h6">{t('sidebar.menuTitle')}</Typography>
+            <Box sx={{ mx: 1 }}>
+                <LanguageToggle />
+              </Box>
+              <Box sx={{ mx: 1 }}>
+                <ThemeToggle />
+              </Box>
             <IconButton
               edge="end"
               color="inherit"
@@ -390,7 +411,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                       handleDrawerItemClick(item.href);
                     }}
                   >
-                    <ListItemText primary={item.label} />
+                    <ListItemText primary={t(`navigation.${item.id}`)} />
                   </ListItem>
                 );
               } else if (item.type === 'menu') {
@@ -418,8 +439,8 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                         }} 
                       />
                       <ListItemText 
-                        primary={item.label} 
-                      />
+                          primary={t('navigation.projects')} 
+                        />
                     </ListItem>
                     {projectsExpanded && Object.entries(projectsByCategory).map(([category, projects]) => (
                       <React.Fragment key={category}>
@@ -443,8 +464,8 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
                             }} 
                           />
                           <ListItemText 
-                            primary={category} 
-                            primaryTypographyProps={{ fontSize: '0.7rem' }}
+                              primary={t(`projectCategories.${category}`)} 
+                              primaryTypographyProps={{ fontSize: '0.7rem' }}
                           />
                         </ListItem>
                         {expandedCategories[category] && projects.map((project) => (
@@ -491,7 +512,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
               LeonCloud
             </Typography>
             <Typography variant="body1" sx={{ opacity: 0.8 }}>
-              LeonMMcoset的所有产品的运营商
+              {t('footer.operator')}
             </Typography>
           </Box>
           
@@ -503,10 +524,10 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
           }}></Box>
           
           <Typography variant="body2" align="center" paragraph>
-            © {new Date().getFullYear()} LeonCloud. 保留所有权利。
+            {t('footer.copyright')}
           </Typography>
           <Typography variant="caption" align="center" color="rgba(255,255,255,0.7)">
-            我们的宗旨是给用户提供简单、安全、高效、全方面的服务
+            {t('footer.motto')}
           </Typography>
         </Container>
       </Box>

@@ -15,11 +15,13 @@ import WorkIcon from "@mui/icons-material/Work";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
 import ClientLayout from "../components/ClientLayout";
+import { useLanguage } from "../components/language/LanguageContext";
 
 export default function SupportPage() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useLanguage();
 
   const handleEmailClick = () => {
     window.location.href = 'mailto:leonmmcoset@outlook.com';
@@ -48,7 +50,7 @@ export default function SupportPage() {
               mb: 2
             }}
           >
-            技术支持服务
+            {t('support.pageTitle')}
           </Typography>
           <Typography
             variant="body1"
@@ -60,7 +62,7 @@ export default function SupportPage() {
               lineHeight: 1.6
             }}
           >
-            如果您在使用开源项目时遇到问题，或者需要外包项目开发，我们随时为您提供专业的技术支持
+            {t('support.pageDescription')}
           </Typography>
         </Box>
 
@@ -105,7 +107,7 @@ export default function SupportPage() {
                   <SupportIcon fontSize="large" color="primary" />
                 </Box>
               }
-              title="我们的服务"
+              title={t('support.card1Title')}
               titleTypographyProps={{
                 variant: 'h6',
                 fontWeight: 600
@@ -113,10 +115,10 @@ export default function SupportPage() {
             />
             <CardContent>
               <Typography variant="body1" paragraph sx={{ lineHeight: 1.6 }}>
-                如果您在使用一些开源项目遇到问题，需要帮助或者是外包项目，欢迎联系我们。
+                {t('support.card1Content1')}
               </Typography>
               <Typography variant="body1" paragraph sx={{ lineHeight: 1.6 }}>
-                我们将提供最优质的服务，确保您的问题得到及时解决。
+                {t('support.card1Content2')}
               </Typography>
             </CardContent>
           </Card>
@@ -141,7 +143,7 @@ export default function SupportPage() {
                   <CodeIcon fontSize="large" color="primary" />
                 </Box>
               }
-              title="支持价格"
+              title={t('support.card2Title')}
               titleTypographyProps={{
                 variant: 'h6',
                 fontWeight: 600
@@ -150,12 +152,12 @@ export default function SupportPage() {
             <CardContent>
               <Box sx={{ mb: 2, p: 2, bgcolor: 'primary.main', color: 'white', borderRadius: '8px' }}>
                 <Typography variant="body1" paragraph sx={{ fontWeight: 600 }}>
-                  普通技术支持：￥20每次
+                  {t('support.card2Regular')}
                 </Typography>
               </Box>
               <Box sx={{ p: 2, bgcolor: 'primary.light', color: "white", borderRadius: '8px' }}>
                 <Typography variant="body1" paragraph sx={{ fontWeight: 600 }}>
-                  外包项目：￥40/项目（大型项目￥70/项目）
+                  {t('support.card2Outsource')}
                 </Typography>
               </Box>
             </CardContent>
@@ -181,7 +183,7 @@ export default function SupportPage() {
                   <MailIcon fontSize="large" color="primary" />
                 </Box>
               }
-              title="联系我们"
+              title={t('support.card3Title')}
               titleTypographyProps={{
                 variant: 'h6',
                 fontWeight: 600
@@ -189,7 +191,7 @@ export default function SupportPage() {
             />
             <CardContent>
               <Typography variant="body1" paragraph sx={{ lineHeight: 1.6, mb: 3 }}>
-                如有需求请通过以下方式联系我们，我们会尽快回复您的咨询。
+                {t('support.card3Content')}
               </Typography>
               <Button
                 variant="contained"
@@ -207,7 +209,7 @@ export default function SupportPage() {
                   }
                 }}
               >
-                发送邮件咨询
+                {t('support.card3Button')}
               </Button>
               <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 2 }}>
                 leonmmcoset@outlook.com
@@ -233,7 +235,7 @@ export default function SupportPage() {
               color: theme.palette.primary.main
             }}
           >
-            服务流程
+            {t('support.processTitle')}
           </Typography>
           
           <Box
@@ -258,10 +260,10 @@ export default function SupportPage() {
               // 确保stepData始终有值
               const getStepData = (stepNum: number) => {
                 const data = {
-                  1: { title: '提交需求', icon: <MailIcon /> },
-                  2: { title: '确认方案', icon: <CodeIcon /> },
-                  3: { title: '执行服务', icon: <WorkIcon /> },
-                  4: { title: '完成交付', icon: <SupportIcon /> }
+                  1: { title: t('support.step1Title'), icon: <MailIcon /> },
+                  2: { title: t('support.step2Title'), icon: <CodeIcon /> },
+                  3: { title: t('support.step3Title'), icon: <WorkIcon /> },
+                  4: { title: t('support.step4Title'), icon: <SupportIcon /> }
                 };
                 return data[stepNum as keyof typeof data] || { title: '', icon: <SupportIcon /> };
               };
@@ -317,10 +319,10 @@ export default function SupportPage() {
                     {stepData.title}
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    {step === 1 && '通过邮件描述您的技术问题或外包需求'}
-                    {step === 2 && '我们确认服务细节和价格'}
-                    {step === 3 && '专业团队为您提供技术支持或开发服务'}
-                    {step === 4 && '完成服务并确保您满意'}
+                    {step === 1 && t('support.step1Desc')}
+                    {step === 2 && t('support.step2Desc')}
+                    {step === 3 && t('support.step3Desc')}
+                    {step === 4 && t('support.step4Desc')}
                   </Typography>
                 </Box>
               );
@@ -350,10 +352,10 @@ export default function SupportPage() {
               mb: 4
             }}
           >
-            准备好获取技术支持了吗？
+            {t('support.ctaTitle')}
           </Typography>
           <Typography variant="body1" sx={{ mb: 6, fontSize: { xs: '1rem', md: '1.1rem' } }}>
-            联系我们，让专业的技术团队为您解决问题
+            {t('support.ctaContent')}
           </Typography>
           <Button
             variant="contained"
@@ -375,7 +377,7 @@ export default function SupportPage() {
               }
             }}
           >
-            立即联系
+            {t('support.ctaButton')}
           </Button>
         </Box>
     </Container>

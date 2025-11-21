@@ -21,11 +21,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import LinkIcon from "@mui/icons-material/Link";
+import { useLanguage } from '../../components/language/LanguageContext';
 
 export default function LeonAPP() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+  const { t } = useLanguage();
 
   // 项目特点
   const features = [
@@ -84,10 +86,10 @@ export default function LeonAPP() {
           gutterBottom
           sx={{ fontWeight: 700, mb: 3 }}
         >
-          LeonAPP
+          {t('leonapp.title')}
         </Typography>
         <Typography variant="h6" color="text.secondary" gutterBottom>
-          开源应用商城平台
+          {t('leonapp.description')}
         </Typography>
         <Typography
           variant="body1"
@@ -97,7 +99,7 @@ export default function LeonAPP() {
             fontSize: { xs: "1rem", md: "1.1rem" },
           }}
         >
-          一个简单而强大的应用商城系统，由LeonCloud和武汉喵星创想互联网科技有限公司开发维护，致力于提供优质的应用分发服务。
+          {t('leonapp.tagline')}
         </Typography>
         <Box
           sx={{
@@ -116,7 +118,7 @@ export default function LeonAPP() {
             rel="noopener noreferrer"
             sx={{ px: 3, py: 1.2 }}
           >
-            访问官网
+            {t('leonapp.visitWebsite')}
           </Button>
           <Button
             variant="outlined"
@@ -126,7 +128,7 @@ export default function LeonAPP() {
             rel="noopener noreferrer"
             sx={{ px: 3, py: 1.2 }}
           >
-            开源仓库
+            {t('leonapp.githubRepo')}
           </Button>
         </Box>
       </Box>
@@ -139,34 +141,30 @@ export default function LeonAPP() {
           gutterBottom
           sx={{ mb: 4, fontWeight: 600 }}
         >
-          项目概述
+          {t('leonapp.overview.title')}
         </Typography>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-              LeonAPP是一个开源的应用商城项目，旨在为开发者提供一个简单易用的应用分发平台。
-              项目由LeonCloud和武汉喵星创想互联网科技有限公司共同拥有和维护，致力于打造一个开放、透明的应用生态系统。
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-              目前LeonAPP
-              v1版本已发布，基于PHP和HTML5技术栈实现。同时，我们正在开发LeonAPP
-              v2版本，
-              该版本将完全重写，采用现代化的技术架构，提供更好的用户体验和更强大的功能。
-            </Typography>
-            <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
-              项目采用MIT开源协议（PC客户端使用GPLv3开源），欢迎社区开发者参与贡献和改进。
-            </Typography>
+                {t('leonapp.overview.description1')}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
+                {t('leonapp.overview.description2')}
+              </Typography>
+              <Typography variant="body1" sx={{ lineHeight: 1.8 }}>
+                {t('leonapp.overview.description3')}
+              </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <Card sx={{ height: "100%", boxShadow: 3, borderRadius: 2 }}>
               <CardContent>
                 <Typography
-                  variant="h6"
-                  gutterBottom
-                  sx={{ mb: 2, fontWeight: 600 }}
-                >
-                  平台特点
-                </Typography>
+                variant="h6"
+                gutterBottom
+                sx={{ mb: 2, fontWeight: 600 }}
+              >
+                {t('leonapp.features.title')}
+              </Typography>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                   {features.map((feature, index) => (
                     <Box
@@ -204,7 +202,7 @@ export default function LeonAPP() {
           gutterBottom
           sx={{ mb: 4, fontWeight: 600 }}
         >
-          版本信息
+          {t('leonapp.version.title')}
         </Typography>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 6 }}>
@@ -297,10 +295,10 @@ export default function LeonAPP() {
           gutterBottom
           sx={{ mb: 4, fontWeight: 600 }}
         >
-          截图展示
+          {t('leonapp.screenshots.title')}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
-          LeonAPP v1界面预览
+          {t('leonapp.screenshots.description')}
         </Typography>
         <ImageList
           sx={{ width: "100%", height: "auto" }}
@@ -357,7 +355,7 @@ export default function LeonAPP() {
           gutterBottom
           sx={{ mb: 4, fontWeight: 600 }}
         >
-          相关资源
+          {t('leonapp.resources.title')}
         </Typography>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
@@ -377,14 +375,14 @@ export default function LeonAPP() {
                   }}
                 />
                 <Typography variant="h6" gutterBottom>
-                  官方网站
+                  {t('leonapp.resources.website')}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ mb: 3 }}
                 >
-                  访问LeonAPP官方网站，体验完整功能
+                  {t('leonapp.resources.websiteDesc')}
                 </Typography>
                 <Button
                   variant="contained"
@@ -393,7 +391,7 @@ export default function LeonAPP() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  立即访问
+                  {t('leonapp.viewWebsite')}
                 </Button>
               </CardContent>
             </Card>
@@ -415,14 +413,14 @@ export default function LeonAPP() {
                   }}
                 />
                 <Typography variant="h6" gutterBottom>
-                  开源仓库
+                  {t('leonapp.resources.sourceCode')}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ mb: 3 }}
                 >
-                  查看源码，参与贡献，了解项目技术细节
+                  {t('leonapp.resources.sourceCodeDesc')}
                 </Typography>
                 <Button
                   variant="outlined"
@@ -431,7 +429,7 @@ export default function LeonAPP() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  前往仓库
+                  {t('leonapp.viewSource')}
                 </Button>
               </CardContent>
             </Card>
@@ -453,16 +451,14 @@ export default function LeonAPP() {
                   }}
                 />
                 <Typography variant="h6" gutterBottom>
-                  技术栈
+                  {t('leonapp.resources.techStack')}
                 </Typography>
                 <Typography
                   variant="body2"
                   color="text.secondary"
                   sx={{ mb: 3 }}
                 >
-                  v1: PHP + HTML5
-                  <br />
-                  v2: 开发中...
+                  {t('leonapp.resources.techStackDesc')}
                 </Typography>
                 <Button
                   variant="outlined"
@@ -471,7 +467,7 @@ export default function LeonAPP() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  了解更多
+                  {t('leonapp.learnMore')}
                 </Button>
               </CardContent>
             </Card>
@@ -490,11 +486,10 @@ export default function LeonAPP() {
         }}
       >
         <Typography variant="body2" color="text.secondary">
-          © {new Date().getFullYear()} LeonCloud &
-          武汉喵星创想互联网科技有限公司
+          © {new Date().getFullYear()} {t('leonapp.copyright')}
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
-          LeonAPP - 开源应用商城平台
+          LeonAPP - {t('leonapp.description')}
         </Typography>
       </Box>
     </Container>

@@ -2,13 +2,16 @@
 
 import { Box, Container, Typography, Card, CardContent, CardMedia, Button, useMediaQuery, useTheme, Tabs, Tab } from '@mui/material';
 import { Code, Star, Download, GitHub, Link, Monitor, Smartphone, Storage } from '@mui/icons-material';
+
 import { useState } from 'react';
+import { useLanguage } from "../../components/language/LanguageContext";
 
 export default function LeonPan() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const [currentTab, setCurrentTab] = useState(0);
+  const { t } = useLanguage();
 
   // 项目截图
   const screenshots = [
@@ -21,23 +24,23 @@ export default function LeonPan() {
   const features = [
     {
       icon: <Monitor color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: "Web支持",
-      description: "无需安装任何客户端就可以快速使用"
+      title: t('leonpan.features.web'),
+      description: t('leonpan.features.webDesc')
     },
     {
       icon: <Smartphone color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: "PC客户端",
-      description: "完美适配Windows 10以上的系统"
+      title: t('leonpan.features.pc'),
+      description: t('leonpan.features.pcDesc')
     },
     {
       icon: <Storage color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: "精美设计",
-      description: "提供简洁而专业的用户界面，操作方便"
+      title: t('leonpan.features.design'),
+      description: t('leonpan.features.designDesc')
     },
     {
       icon: <Code color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: "开源可定制",
-      description: "基于GPLv3协议开源，可自由修改和定制"
+      title: t('leonpan.features.customizable'),
+      description: t('leonpan.features.customizableDesc')
     }
   ];
 
@@ -74,10 +77,10 @@ export default function LeonPan() {
       }}>
         <Container maxWidth="md" sx={{ position: 'relative', zIndex: 1 }}>
           <Typography variant={isMobile ? "h3" : "h2"} component="h1" gutterBottom fontWeight="bold">
-            LeonPan
+            {t('leonpan.title')}
           </Typography>
           <Typography variant="body1" paragraph sx={{ maxWidth: 600, mx: 'auto', opacity: 0.9 }}>
-            LeonPan是一个开源项目，改编自Cloudreve开源项目，使用GPLv3协议开源。提供强大的文件管理功能。
+            {t('leonpan.description')}
           </Typography>
           <Box sx={{ mt: 4, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
             <Button 
@@ -88,7 +91,7 @@ export default function LeonPan() {
               sx={{ px: 3 }}
               onClick={() => window.open('http://leonmmcoset.jjxmm.win:2000/leonmmcoset/leonpan', '_blank')}
             >
-              Git仓库
+              {t('leonpan.gitRepo')}
             </Button>
             <Button 
               variant="outlined" 
@@ -98,7 +101,7 @@ export default function LeonPan() {
               sx={{ px: 3, borderColor: 'white', color: 'white', '&:hover': { borderColor: 'rgba(255,255,255,0.8)' } }}
               onClick={() => window.open('http://leonmmcoset.jjxmm.win:5212/', '_blank')}
             >
-              进入LeonAPP
+              {t('leonpan.enterApp')}
             </Button>
           </Box>
         </Container>
@@ -110,23 +113,22 @@ export default function LeonPan() {
           <Box sx={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? 4 : 6, alignItems: 'center', width: '100%' }}>
             <Box sx={{ width: '100%' }}>
               <Typography variant={isMobile ? "h4" : "h3"} component="h2" gutterBottom fontWeight="bold">
-                项目概述
+                {t('leonpan.overview')}
               </Typography>
               <Typography variant="body1" paragraph sx={{ mb: 3, color: 'text.secondary' }}>
-                LeonPan是基于Cloudreve开发的文件管理系统，提供了丰富的功能和友好的用户界面。
-                它支持多种存储方式，包括本地存储、对象存储等，可以满足不同用户的需求。
+                {t('leonpan.overviewDesc1')}
               </Typography>
               <Typography variant="body1" paragraph sx={{ mb: 3, color: 'text.secondary' }}>
-                项目致力于提供安全、稳定、高效的文件管理解决方案，适用于个人用户和团队协作场景。
+                {t('leonpan.overviewDesc2')}
               </Typography>
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mt: 4 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Star color="secondary" fontSize="small" style={{ fontSize: 16 }} />
-                  <Typography variant="body2">开源免费</Typography>
+                  <Typography variant="body2">{t('leonpan.openSource')}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                   <Code color="primary" fontSize="small" style={{ fontSize: 16 }} />
-                  <Typography variant="body2">GPLv3协议</Typography>
+                  <Typography variant="body2">{t('leonpan.license')}</Typography>
                 </Box>
               </Box>
             </Box>
@@ -149,10 +151,10 @@ export default function LeonPan() {
       <Box sx={{ py: isMobile ? 6 : 10, px: 2, bgcolor: 'grey.50' }}>
         <Container maxWidth="lg">
           <Typography variant={isMobile ? "h4" : "h3"} component="h2" align="center" gutterBottom fontWeight="bold">
-            功能特点
+            {t('leonpan.features')}
           </Typography>
           <Typography variant="body1" align="center" paragraph sx={{ mb: 8, maxWidth: 600, mx: 'auto', color: 'text.secondary' }}>
-            LeonPan提供丰富的功能，满足您的文件管理需求
+            {t('leonpan.featuresDesc')}
           </Typography>
           
           <Box sx={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: isMobile ? 3 : 4, width: '100%' }}>
@@ -194,10 +196,10 @@ export default function LeonPan() {
       <Box sx={{ py: isMobile ? 6 : 10, px: 2 }}>
         <Container maxWidth="lg">
           <Typography variant={isMobile ? "h4" : "h3"} component="h2" align="center" gutterBottom fontWeight="bold">
-            界面展示
+            {t('leonpan.screenshots')}
           </Typography>
           <Typography variant="body1" align="center" paragraph sx={{ mb: 8, maxWidth: 600, mx: 'auto', color: 'text.secondary' }}>
-            查看LeonPan的精美界面
+            {t('leonpan.screenshotsDesc')}
           </Typography>
 
           {/* 截图切换标签 */}
@@ -212,7 +214,7 @@ export default function LeonPan() {
                 textColor="primary"
               >
                 {screenshots.map((_, index) => (
-                  <Tab key={index} label={`截图 ${index + 1}`} />
+                  <Tab key={index} label={`${index + 1}. ${t('leonpan.screenshotNum')}`} />
                 ))}
               </Tabs>
             </Box>
@@ -225,7 +227,7 @@ export default function LeonPan() {
                 component="img"
                 height={isMobile ? 250 : 400}
                 image={screenshots[currentTab]}
-                alt={`LeonPan 截图 ${currentTab + 1}`}
+                alt={`${t('leonpan.screenshotAlt')} ${currentTab + 1}`}
                 sx={{ objectFit: 'contain', maxWidth: '100%' }}
               />
             </Card>
@@ -249,7 +251,7 @@ export default function LeonPan() {
                 >
                   <img
                     src={screenshot}
-                    alt={`缩略图 ${index + 1}`}
+                    alt={`${t('leonpan.thumbnail')} ${index + 1}`}
                     style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 </Button>
@@ -323,10 +325,10 @@ export default function LeonPan() {
       <Box sx={{ py: isMobile ? 8 : 12, px: 2, bgcolor: 'primary.main', color: 'white', textAlign: 'center' }}>
         <Container maxWidth="md">
           <Typography variant={isMobile ? "h4" : "h3"} component="h2" gutterBottom fontWeight="bold">
-            开始使用 LeonPan
+            {t('leonpan.getStarted')}
           </Typography>
           <Typography variant="body1" paragraph sx={{ mb: 6, opacity: 0.9 }}>
-            立即体验LeonPan带来的高效文件管理体验，开源免费，功能强大
+            {t('leonpan.getStartedDesc')}
           </Typography>
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, justifyContent: 'center' }}>
             <Button 
@@ -337,7 +339,7 @@ export default function LeonPan() {
               sx={{ px: 4, py: 1.5 }}
               onClick={() => window.open('http://leonmmcoset.jjxmm.win:2000/leonmmcoset/leonpan', '_blank')}
             >
-              访问Git仓库
+              {t('leonpan.visitGitRepo')}
             </Button>
             <Button 
               variant="outlined" 
@@ -347,7 +349,7 @@ export default function LeonPan() {
               sx={{ px: 4, py: 1.5, borderColor: 'white', color: 'white', '&:hover': { borderColor: 'rgba(255,255,255,0.8)' } }}
               onClick={() => window.open('http://leonmmcoset.jjxmm.win:5212/', '_blank')}
             >
-              立即访问LeonAPP
+              {t('leonpan.visitAppNow')}
             </Button>
           </Box>
         </Container>

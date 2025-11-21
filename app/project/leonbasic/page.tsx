@@ -9,36 +9,37 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import PublicIcon from '@mui/icons-material/Public';
 import TerminalIcon from '@mui/icons-material/Terminal';
 import BookIcon from '@mui/icons-material/Book';
-import { Book } from '@mui/icons-material';
+import { useLanguage } from "../../components/language/LanguageContext";
 
 export default function LeonBasic() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isMedium = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useLanguage();
 
   // 项目特点数据
   const features = [
-    {
-      icon: <CodeIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: '简单易学',
-      description: '语法简洁明了，适合编程初学者快速入门'
-    },
-    {
-      icon: <TerminalIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: '基于Rust',
-      description: '底层使用Rust实现，保证高性能和内存安全'
-    },
-    {
-      icon: <BookIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: '混合语法',
-      description: '融合了Python的简洁和Swift的现代语法特性'
-    },
-    {
-      icon: <EmojiEventsIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
-      title: '高性能',
-      description: '编译型语言，运行效率高，资源占用少'
-    }
-  ];
+     {
+       icon: <CodeIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
+       title: t('leonbasic.features.easy.title'),
+       description: t('leonbasic.features.easy.description')
+     },
+     {
+       icon: <TerminalIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
+       title: t('leonbasic.features.rustBased.title'),
+       description: t('leonbasic.features.rustBased.description')
+     },
+     {
+       icon: <BookIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
+       title: t('leonbasic.features.hybridSyntax.title'),
+       description: t('leonbasic.features.hybridSyntax.description')
+     },
+     {
+       icon: <EmojiEventsIcon color="primary" style={{ fontSize: isMobile ? 24 : 32 }} />,
+       title: t('leonbasic.features.highPerformance.title'),
+       description: t('leonbasic.features.highPerformance.description')
+     }
+    ];
 
   // 示例代码
   const exampleCode = `// LeonBasic示例代码
@@ -59,13 +60,13 @@ basic.print(string:"请输入一个数字:" + var(input));`;
         }}
       >
         <Typography variant="h3" component="h1" gutterBottom sx={{ fontWeight: 700, mb: 3 }}>
-          LeonBasic
+          {t('leonbasic.title')}
         </Typography>
         <Typography variant="h6" color="text.secondary" gutterBottom>
-          The LeonBasic Programming Language
+          {t('leonbasic.description')}
         </Typography>
         <Typography variant="body1" sx={{ maxWidth: 600, mx: 'auto', fontSize: { xs: '1rem', md: '1.1rem' } }}>
-          一个简单易懂的编程语言，专为初学者设计，基于Rust实现，融合了Python的简洁和Swift的现代语法特性。
+          {t('leonbasic.tagline')}
         </Typography>
         <Box sx={{ mt: 6, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
           <Button
@@ -94,25 +95,23 @@ basic.print(string:"请输入一个数字:" + var(input));`;
       {/* 项目概述 */}
       <Box sx={{ mb: { xs: 8, md: 12 } }}>
         <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 4, fontWeight: 600 }}>
-          项目概述
-        </Typography>
+            {t('leonbasic.overview.title')}
+          </Typography>
         <Grid container spacing={4}>
           <Grid size={{ xs: 12, md: 6 }}>
             <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-              LeonBasic是一门专为编程初学者设计的编程语言，旨在降低编程学习的门槛，同时保持良好的性能和现代语言特性。
-              该语言基于Rust实现，结合了Python的易读性和Swift的语法优雅，让初学者能够快速上手，同时也能接触到现代编程语言的核心概念。
-            </Typography>
-            <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
-              无论是完全没有编程经验的新手，还是想要了解不同编程范式的开发者，都能从LeonBasic中获益。
-              简单易学的语法设计让学习过程更加轻松愉快，同时Rust的底层实现又保证了程序的性能和安全性。
-            </Typography>
+                {t('leonbasic.overview.description1')}
+              </Typography>
+              <Typography variant="body1" sx={{ mb: 3, lineHeight: 1.8 }}>
+                {t('leonbasic.overview.description2')}
+              </Typography>
           </Grid>
           <Grid size={{ xs: 12, md: 6 }}>
             <Card sx={{ height: '100%', boxShadow: 3, borderRadius: 2 }}>
               <CardContent>
                 <Typography variant="h6" gutterBottom sx={{ mb: 2, fontWeight: 600 }}>
-                  语言特点
-                </Typography>
+                {t('leonbasic.features.title')}
+              </Typography>
                 <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
                   {features.map((feature, index) => (
                     <Box key={index} sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
@@ -139,8 +138,8 @@ basic.print(string:"请输入一个数字:" + var(input));`;
       {/* 语法示例 */}
       <Box sx={{ mb: { xs: 8, md: 12 } }}>
         <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 4, fontWeight: 600 }}>
-          语法示例
-        </Typography>
+            {t('leonbasic.examples.title')}
+          </Typography>
         <Card sx={{ backgroundColor: '#f5f5f5', borderRadius: 2, overflow: 'hidden' }}>
           <Box 
             sx={{ 
@@ -173,18 +172,18 @@ basic.print(string:"请输入一个数字:" + var(input));`;
       {/* 资源链接 */}
       <Box sx={{ mb: 6 }}>
         <Typography variant="h4" component="h2" gutterBottom sx={{ mb: 4, fontWeight: 600 }}>
-          相关资源
-        </Typography>
+            {t('leonbasic.resources.title')}
+          </Typography>
         <Grid container spacing={3}>
           <Grid size={{ xs: 12, sm: 6, md: 4 }}>
             <Card sx={{ height: '100%', transition: 'transform 0.2s', '&:hover': { transform: 'translateY(-5px)' } }}>
               <CardContent>
                 <GitHubIcon sx={{ fontSize: 40, mb: 2, color: theme.palette.primary.main }} />
                 <Typography variant="h6" gutterBottom>
-                  GitHub 仓库
+                  {t('leonbasic.resources.documentation')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  查看源码，参与贡献，提交问题反馈
+                  {t('leonbasic.resources.documentationDesc')}
                 </Typography>
                 <Button 
                   variant="outlined" 
@@ -193,7 +192,7 @@ basic.print(string:"请输入一个数字:" + var(input));`;
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  访问仓库
+                  {t('leonbasic.viewSource')}
                 </Button>
               </CardContent>
             </Card>
@@ -203,10 +202,10 @@ basic.print(string:"请输入一个数字:" + var(input));`;
               <CardContent>
                 <PublicIcon sx={{ fontSize: 40, mb: 2, color: theme.palette.primary.main }} />
                 <Typography variant="h6" gutterBottom>
-                  官方网站
+                  {t('leonbasic.resources.sourceCode')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  完整的文档，教程和示例
+                  {t('leonbasic.resources.sourceCodeDesc')}
                 </Typography>
                 <Button 
                   variant="outlined" 
@@ -215,7 +214,7 @@ basic.print(string:"请输入一个数字:" + var(input));`;
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  访问官网
+                  {t('leonbasic.tryNow')}
                 </Button>
               </CardContent>
             </Card>
@@ -225,10 +224,10 @@ basic.print(string:"请输入一个数字:" + var(input));`;
               <CardContent>
                 <BookIcon sx={{ fontSize: 40, mb: 2, color: theme.palette.primary.main }} />
                 <Typography variant="h6" gutterBottom>
-                  学习资源
+                  {t('leonbasic.resources.learning.title')}
                 </Typography>
                 <Typography variant="body2" color="text.secondary" gutterBottom>
-                  入门教程，示例代码和最佳实践
+                  {t('leonbasic.resources.learning.description')}
                 </Typography>
                 <Button 
                   variant="outlined" 
@@ -237,7 +236,7 @@ basic.print(string:"请输入一个数字:" + var(input));`;
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  查看文档
+                  {t('leonbasic.resources.learning.button')}
                 </Button>
               </CardContent>
             </Card>
@@ -248,7 +247,7 @@ basic.print(string:"请输入一个数字:" + var(input));`;
       {/* 页脚 */}
       <Box sx={{ textAlign: 'center', mt: 12, pt: 4, borderTop: '1px solid rgba(0,0,0,0.1)' }}>
         <Typography variant="body2" color="text.secondary">
-          © {new Date().getFullYear()} LeonMMcoset
+          © {new Date().getFullYear()} {t('leonbasic.copyright')}
         </Typography>
       </Box>
     </Container>

@@ -6,6 +6,7 @@ import { Box, Container, Typography, Card, CardContent, CardMedia, Button, useMe
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PublicIcon from '@mui/icons-material/Public';
 import WindowIcon from '@mui/icons-material/Window';
+import { useLanguage } from './components/language/LanguageContext';
 
 
 
@@ -13,43 +14,44 @@ export default function Home() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  const { t } = useLanguage();
 
   // 功能数据
   const features = [
     {
       icon: <PublicIcon fontSize="large" color="primary" style={{ fontSize: isMobile ? 32 : 48 }} />,
-      title: "云端访问",
-      description: "随时随地访问您的项目和文件，无需担心设备限制"
+      title: t('features.cloudAccess.title'),
+      description: t('features.cloudAccess.description')
     },
     {
       icon: <WindowIcon fontSize="large" color="primary" style={{ fontSize: isMobile ? 32 : 48 }} />,
-      title: "响应式设计",
-      description: "完美适配各种设备，从手机到桌面电脑"
+      title: t('features.responsiveDesign.title'),
+      description: t('features.responsiveDesign.description')
     },
     {
       icon: <AttachFileIcon fontSize="large" color="primary" style={{ fontSize: isMobile ? 32 : 48 }} />,
-      title: "文件管理",
-      description: "高效管理您的所有项目文件，支持多种格式"
+      title: t('features.fileManagement.title'),
+      description: t('features.fileManagement.description')
     }
   ];
 
   // 项目数据
   const projects = [
     {
-      name: "LeonPan",
-      description: "个人项目展示平台",
+      name: t('projects.leonpan.name'),
+      description: t('projects.leonpan.description'),
       image: "/projects/leonpan/logo.png",
       href: "/project/leonpan"
     },
     {
-      name: "LeonBasic",
-      description: "基于Rust的简单易学的编程语言",
+      name: t('projects.leonbasic.name'),
+      description: t('projects.leonbasic.description'),
       image: "/nologo.png",
       href: "/project/leonbasic"
     },
     {
-      name: "LeonApp",
-      description: "基于PHP的轻量级应用程序",
+      name: t('projects.leonapp.name'),
+      description: t('projects.leonapp.description'),
       image: "/projects/leonapp/logo.jpeg",
       href: "/project/leonapp"
     },
@@ -58,33 +60,33 @@ export default function Home() {
   // 扩展服务类别数据
   const services = [
     {
-      name: "云盘服务",
-      description: "安全可靠的云存储解决方案",
+      name: t('services.cloudStorage.name'),
+      description: t('services.cloudStorage.description'),
       icon: <AttachFileIcon />
     },
     {
-      name: "社区论坛",
-      description: "用户交流与分享的平台",
+      name: t('services.communityForum.name'),
+      description: t('services.communityForum.description'),
       icon: <PublicIcon />
     },
     {
-      name: "编程语言",
-      description: "创新的编程语言开发",
+      name: t('services.programmingLanguage.name'),
+      description: t('services.programmingLanguage.description'),
       icon: <WindowIcon />
     },
     {
-      name: "操作系统",
-      description: "轻量级操作系统解决方案",
+      name: t('services.operatingSystem.name'),
+      description: t('services.operatingSystem.description'),
       icon: <WindowIcon />
     },
     {
-      name: "我的世界服务器",
-      description: "稳定高效的游戏服务器",
+      name: t('services.mcServer.name'),
+      description: t('services.mcServer.description'),
       icon: <PublicIcon />
     },
     {
-      name: "加密语言",
-      description: "安全通信解决方案",
+      name: t('services.encryptionLanguage.name'),
+      description: t('services.encryptionLanguage.description'),
       icon: <AttachFileIcon />
     }
   ];
@@ -119,14 +121,14 @@ export default function Home() {
             fontWeight="bold"
             sx={{ mb: 3 }}
           >
-            LeonCloud
+            {t('hero.title')}
           </Typography>
           <Typography 
             variant={isMobile ? "h6" : "h5"} 
             paragraph 
             sx={{ mb: 6, opacity: 0.9 }}
           >
-            LeonMMcoset的所有产品的运营商
+            {t('hero.subtitle')}
           </Typography>
           <Typography 
             variant="body1" 
@@ -139,7 +141,7 @@ export default function Home() {
               fontSize: isMobile ? '1rem' : '1.1rem'
             }}
           >
-            覆盖云盘、论坛、编程语言、操作系统、我的世界服务器、加密语言等各种服务
+            {t('hero.description')}
           </Typography>
           <Typography 
             variant="body1" 
@@ -154,7 +156,7 @@ export default function Home() {
               display: 'inline-block'
             }}
           >
-            我们的宗旨是给用户提供简单、安全、高效、全方面的服务
+            {t('hero.motto')}
           </Typography>
         </Container>
       </Box>
@@ -170,7 +172,7 @@ export default function Home() {
             fontWeight="bold"
             sx={{ mb: 6 }}
           >
-            我们的服务
+            {t('services.sectionTitle')}
           </Typography>
           
           <Box sx={{ 
@@ -234,20 +236,34 @@ export default function Home() {
             fontWeight="bold"
             sx={{ mb: 6 }}
           >
-            精选项目
+            {t('projects.sectionTitle')}
           </Typography>
           
           <Box sx={{ 
             display: 'flex', 
-            justifyContent: 'center',
-            gap: 4
+            overflowX: 'auto',
+            gap: 4,
+            pb: 2,
+            '&::-webkit-scrollbar': {
+              height: 8,
+            },
+            '&::-webkit-scrollbar-track': {
+              bgcolor: 'transparent',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              bgcolor: 'rgba(0,0,0,0.2)',
+              borderRadius: 4,
+            },
+            '&::-webkit-scrollbar-thumb:hover': {
+              bgcolor: 'rgba(0,0,0,0.3)',
+            },
           }}>
             {projects.map((project, index) => (
               <Card 
                 key={index} 
                 sx={{
-                  width: { xs: '100%', sm: 400, md: 500 },
-                  maxWidth: '100%',
+                  width: { xs: 280, sm: 340, md: 400 },
+                  minWidth: { xs: 280, sm: 340, md: 400 },
                   borderRadius: 3,
                   boxShadow: 3,
                   transition: 'all 0.3s ease',
@@ -279,7 +295,7 @@ export default function Home() {
                     fullWidth
                     sx={{ py: 1.2 }}
                   >
-                    查看详情
+                    {t('projects.viewDetails')}
                   </Button>
                 </CardContent>
               </Card>
@@ -299,7 +315,7 @@ export default function Home() {
             fontWeight="bold"
             sx={{ mb: 6 }}
           >
-            我们的优势
+            {t('advantages.sectionTitle')}
           </Typography>
           
           <Box sx={{ 
@@ -353,24 +369,24 @@ export default function Home() {
               justifyContent: 'center'
             }}>
               <Typography variant={isMobile ? "h5" : "h4"} gutterBottom fontWeight="bold">
-                我们的承诺
+                {t('commitments.title')}
               </Typography>
               <Box sx={{ height: 2, bgcolor: 'white', opacity: 0.3, mb: 4 }}></Box>
               <ul style={{ paddingLeft: isMobile ? 0 : 20, margin: 0, listStyleType: isMobile ? 'none' : 'disc' }}>
                 <li style={{ marginBottom: 16, fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                  简单易用的界面设计
+                  {t('commitments.easyToUse')}
                 </li>
                 <li style={{ marginBottom: 16, fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                  企业级安全保障
+                  {t('commitments.enterpriseSecurity')}
                 </li>
                 <li style={{ marginBottom: 16, fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                  高效稳定的系统性能
+                  {t('commitments.efficientPerformance')}
                 </li>
                 <li style={{ marginBottom: 16, fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                  全方面的服务支持
+                  {t('commitments.comprehensiveSupport')}
                 </li>
                 <li style={{ fontSize: isMobile ? '0.9rem' : '1rem' }}>
-                  持续创新的技术研发
+                  {t('commitments.continuousInnovation')}
                 </li>
               </ul>
             </Box>

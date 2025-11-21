@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 // 导入客户端组件
 import ClientLayout from './components/ClientLayout';
+import LanguageProvider from './components/language/LanguageContext';
 
 export default function RootLayout({
   children,
@@ -20,9 +21,11 @@ export default function RootLayout({
   return (
     <html>
       <body>
-        <ClientLayout>
-          {children}
-        </ClientLayout>
+        <LanguageProvider>
+          <ClientLayout>
+            {children}
+          </ClientLayout>
+        </LanguageProvider>
       </body>
     </html>
   );
