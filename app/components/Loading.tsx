@@ -1,3 +1,4 @@
+console.log("[Application Info] Start loading <Loading.tsx>");
 import React from 'react';
 import { Dialog, DialogContent, Box, Typography, LinearProgress } from '@mui/material';
 import { CircularProgress } from '@mui/material';
@@ -57,4 +58,5 @@ const Loading: React.FC<LoadingProps> = ({ open, progress, message = '正在加�
   );
 };
 
+console.log("[Application Info] Finish loading <Loading.tsx>");
 export default Loading;

@@ -7,6 +7,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PublicIcon from '@mui/icons-material/Public';
 import WindowIcon from '@mui/icons-material/Window';
 import { useLanguage } from './components/language/LanguageContext';
+import { useThemeContext } from './components/theme/ThemeContext';
 
 
 
@@ -15,6 +16,7 @@ export default function Home() {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const { t } = useLanguage();
+  const { isDarkMode } = useThemeContext();
 
   // 功能数据
   const features = [
@@ -225,7 +227,7 @@ export default function Home() {
       <Box sx={{ 
         py: isMobile ? 8 : 12, 
         px: 2,
-        bgcolor: 'grey.50'
+        bgcolor: isDarkMode ? 'background.default' : 'grey.50'
       }}>
         <Container maxWidth="lg">
           <Typography 

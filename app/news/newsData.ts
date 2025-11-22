@@ -13,11 +13,21 @@ export interface NewsItem {
 // 模拟新闻数据
 export const newsItems: NewsItem[] = [
   {
-    id: 0,
+    id: 3,
+    title: "2025-11-22 服务器维护通知",
+    summary: "服务器将在2025-11-22进行维护，预计持续时间为3小时...",
+    content: `服务器将在2025-11-22进行维护，预计持续时间为3小时。维护时间为11:30-14:30。
+### 主要维护内容
+- 服务器备份`,
+    date: "2025-11-22",
+    category: "分区",
+    language: 'zh'
+  },
+  {
+    id: 2,
     title: "2025-11-21 服务器故障报告",
     summary: "服务器出现故障，搭建在中心服务器的服务全部不可用...",
-    content: `
-# 服务器故障报告
+    content: `# 服务器故障报告
 
 ## 事件概述
 服务器出现故障，搭建在中心服务器的服务全部不可用。
@@ -29,15 +39,14 @@ export const newsItems: NewsItem[] = [
 - **14:13** - 开始修复
 - **14:17** - 修复完成`,
     date: "2025-11-21",
-    category: "服务器事故",
+    category: "服务器故障",
     language: 'zh'
   },
   {
     id: 1,
     title: "LeonPan发布PC客户端测试版",
     summary: "LeonPan今日发布PC客户端测试版，带来更强大的功能和更优的用户体验...",
-    content: `
-LeonPan今日发布PC客户端测试版，带来更强大的功能和更优的用户体验。
+    content: `LeonPan今日发布PC客户端测试版，带来更强大的功能和更优的用户体验。
 
 测试版包含了最新的功能，如快速启动等，让用户不用开浏览器即可使用LeonPan。
 
@@ -53,6 +62,7 @@ LeonPan今日发布PC客户端测试版，带来更强大的功能和更优的�
   //   summary: "总结",
   //   content: "内容",
   //   date: "1970-01-01",
-  //   category: "分区"
+  //   category: "分区",
+  //   language: 'zh'
   // }
 ];

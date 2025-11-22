@@ -1,4 +1,5 @@
 "use client";
+console.log("[Application Info] Start loading <ThemeToggle.tsx>");
 import React from 'react';
 import { IconButton, Tooltip, Menu, MenuItem } from '@mui/material';
 import LightModeIcon from '@mui/icons-material/LightMode';
@@ -74,4 +75,5 @@ const ThemeToggle: React.FC = () => {
   );
 };
 
+console.log("[Application Info] Finish loading <ThemeToggle.tsx>");
 export default ThemeToggle;

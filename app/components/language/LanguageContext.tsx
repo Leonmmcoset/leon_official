@@ -1,4 +1,5 @@
 "use client";
+console.log("[Application Info] Start loading <LanguageContext.tsx>");
 import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
 import { zhTranslations } from './zhTranslations';
 import { enTranslations } from './enTranslations';
@@ -99,3 +100,4 @@ export const useLanguage = () => {
 };
 
 export default LanguageProvider;
+console.log("[Application Info] Finish loading <LanguageContext.tsx>");

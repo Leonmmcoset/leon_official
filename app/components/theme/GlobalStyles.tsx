@@ -1,4 +1,5 @@
 "use client";
+console.log("[Application Info] Start loading <GlobalStyles.tsx>");
 import { GlobalStyles as MuiGlobalStyles } from '@mui/material';
 
 // 全局样式组件，确保在不同主题下网站元素都能正确响应
@@ -33,4 +34,5 @@ export const GlobalStyles = () => {
   );
 };
 
+console.log("[Application Info] Finish loading <GlobalStyles.tsx>");
 export default GlobalStyles;

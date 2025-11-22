@@ -4,7 +4,8 @@ import { Box, Container, Typography, Card, CardContent, CardMedia, Button, useMe
 import { Code, Star, Download, GitHub, Link, Monitor, Smartphone, Storage } from '@mui/icons-material';
 
 import { useState } from 'react';
-import { useLanguage } from "../../components/language/LanguageContext";
+import { useLanguage } from '../../components/language/LanguageContext';
+import { useThemeContext } from '../../components/theme/ThemeContext';
 
 export default function LeonPan() {
   const theme = useTheme();
@@ -12,6 +13,7 @@ export default function LeonPan() {
   const isTablet = useMediaQuery(theme.breakpoints.down('md'));
   const [currentTab, setCurrentTab] = useState(0);
   const { t } = useLanguage();
+  const { isDarkMode } = useThemeContext();
 
   // 项目截图
   const screenshots = [
@@ -148,7 +150,7 @@ export default function LeonPan() {
       </Box>
 
       {/* 功能特点 */}
-      <Box sx={{ py: isMobile ? 6 : 10, px: 2, bgcolor: 'grey.50' }}>
+      <Box sx={{ py: isMobile ? 6 : 10, px: 2, bgcolor: isDarkMode ? 'background.default' : 'grey.50' }}>
         <Container maxWidth="lg">
           <Typography variant={isMobile ? "h4" : "h3"} component="h2" align="center" gutterBottom fontWeight="bold">
             {t('leonpan.features')}

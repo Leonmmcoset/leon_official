@@ -24,6 +24,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useLanguage } from "./language/LanguageContext";
+console.log("[Application Info] Start loading <ClientLayout.tsx>");
 
 function colorLog(message: string, color: 'reset' | 'red' | 'green' | 'yellow' | 'blue') {
     const colors = {
@@ -109,6 +110,18 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
 
   // 获取语言上下文
   const { t } = useLanguage();
+
+  // 监听语言变化，更新页面标题和描述
+  React.useEffect(() => {
+    // 更新页面标题
+    document.title = t('websiteTitle') || 'LeonCloud';
+    
+    // 更新页面描述
+    const descriptionElement = document.querySelector('meta[name="description"]');
+    if (descriptionElement) {
+      descriptionElement.setAttribute('content', t('websiteDescription') || '覆盖云盘、论坛、编程语言、操作系统、我的世界服务器、加密语言等各种服务');
+    }
+  }, [t]); // 依赖t函数，当语言变化时重新执行
 
   // 动态定义顶部导航链接
   const navItems: NavItem[] = [
@@ -217,32 +230,33 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     children?: React.ReactElement<{ elevation?: number }>;
   }
 
-  // function ElevationScroll(props: Props) {
-  //   const { children, window } = props;
-  //   // Note that you normally won't need to set the window ref as useScrollTrigger
-  //   // will default to window.
-  //   // This is only being set here because the demo is in an iframe.
-  //   const trigger = useScrollTrigger({
-  //     disableHysteresis: true,
-  //     threshold: 0,
-  //     target: window ? window() : undefined,
-  //   });
+  function ElevationScroll(props: Props) {
+    const { children, window } = props;
+    // Note that you normally won't need to set the window ref as useScrollTrigger
+    // will default to window.
+    // This is only being set here because the demo is in an iframe.
+    const trigger = useScrollTrigger({
+      disableHysteresis: true,
+      threshold: 0,
+      target: window ? window() : undefined,
+    });
 
-  //   return children
-  //     ? React.cloneElement(children, {
-  //         elevation: trigger ? 4 : 0,
-  //       })
-  //     : null;
-  // }
+    return children
+      ? React.cloneElement(children, {
+          elevation: trigger ? 4 : 0,
+        })
+      : null;
+  }
 
   return (
     <ThemeProvider>
       <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="fixed" sx={{ 
-          zIndex: 1100, 
-          backdropFilter: 'blur(12px)',
-          // backgroundColor: 'rgba(30, 30, 30, 0.8)', // 添加半透明背景色以显示模糊效果
-        }}>
+        <ElevationScroll>
+          <AppBar position="fixed" sx={{ 
+            zIndex: 1100, 
+            backdropFilter: 'blur(12px)',
+            // backgroundColor: 'rgba(30, 30, 30, 0.8)', // 添加半透明背景色以显示模糊效果
+          }}>
           <Toolbar>
             {/* 响应式顶栏 - 移动端显示汉堡菜单，桌面端显示完整导航 */}
             <Box sx={{ display: "flex", alignItems: "center", flexGrow: 1 }}>
@@ -360,6 +374,7 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
             )}
            </Toolbar>
           </AppBar>
+        </ElevationScroll>
       </Box>
 
       {/* 移动端侧边栏 */}
@@ -534,5 +549,5 @@ const ClientLayout: React.FC<ClientLayoutProps> = ({ children }) => {
     </ThemeProvider>
   );
 };
-
+console.log("[Application Info] Finish loading <ClientLayout.tsx>");
 export default ClientLayout;

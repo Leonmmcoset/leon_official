@@ -1,4 +1,5 @@
 "use client";
+console.log("[Application Info] Start loading <ThemeContext.tsx>");
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { createTheme, ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
@@ -131,3 +132,4 @@ export const useThemeContext = () => {
   }
   return context;
 };
+console.log("[Application Info] Finish loading <ThemeContext.tsx>");
